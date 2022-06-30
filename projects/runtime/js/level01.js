@@ -23,11 +23,11 @@ var level01 = function (window) {
         };
         window.levelData = levelData;
         // set this to true or false depending on if you want to see hitzones
-        game.setDebugMode(false);
+        game.setDebugMode(true);
 
         // TODO 6 and on go here
         // BEGIN EDITING YOUR CODE HERE
-        
+
         function createSawBlade(x, y) {
             var hitZoneSize = 25;
             var damageFromObstacle = 10;
@@ -40,6 +40,41 @@ var level01 = function (window) {
             obstacleImage.x = -25;
             obstacleImage.y = -25;
         }
+        function createRubberDuck(x, y) {
+            var hitZoneSize = 10;
+            var damageFromObstacle = 1;
+            var rubberDuckHitZone = game.createObstacle(hitZoneSize, damageFromObstacle);
+            rubberDuckHitZone.x = x;
+            rubberDuckHitZone.y = y;
+            game.addGameItem(rubberDuckHitZone);
+            var obstacleImage = draw.bitmap('img/3b4a1a6c-9ba8-460e-8feb-b66fc76c6ccc.png')
+            rubberDuckHitZone.addChild(obstacleImage);
+            obstacleImage.x = -10
+            obstacleImage.y = -10
+        }
+        var enemy = game.createGameItem('enemy', 25);
+        var redSquare = draw.rect(50, 50, 'red');
+        redSquare.x = -25;
+        redSquare.y = -25;
+        enemy.addChild(redSquare);
+        enemy.x = 400;
+        enemy.y = groundY-50;
+        game.addGameItem(enemy);
+        enemy.velocityX = -1;
+        enemy.rotationalVelocity = 10;
+        enemy.onPlayerCollision = function() {
+            console.log('The enemy has hit Halle');
+            game.changeIntegrity(-10);
+        }
+        enemy.onProjectileCollision = function() {
+            console.log('Halle has hit the enemy');
+            
+        }
+
+        createRubberDuck(800, 300)
+        createSawBlade(700, 477)
+        createSawBlade(2000, 340)
+        createSawBlade(2985, 356)
         // DO NOT EDIT CODE BELOW HERE
     }
 };
